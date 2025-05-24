@@ -31,7 +31,7 @@ class CreateUser extends Command
             'password' => Hash::make($password),
         ]);
 
-        $this->info("User created successfully. Password: $password");
+        $this->info("User created. Password: $password");
 
         return 0;
     }

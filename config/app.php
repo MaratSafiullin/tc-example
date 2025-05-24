@@ -123,4 +123,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'disable_db_migration_for_tests' => env('APP_DISABLE_DB_MIGRATION_FOR_TESTS', false),
 ];
