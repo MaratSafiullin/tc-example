@@ -49,7 +49,7 @@ class SetControllerExamples
             'per_page'     => 10,
         ],
     ];
-    public const STORE = [
+    public const SHOW  = [
         'data' => [
             [
                 'id'           => 1,
@@ -63,4 +63,5 @@ class SetControllerExamples
             ],
         ],
     ];
+    public const STORE = self::SHOW;
 }

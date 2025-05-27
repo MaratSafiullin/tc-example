@@ -10,10 +10,12 @@ use App\Models\Set;
 use App\Models\Set\Status;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Gate;
 use Knuckles\Scribe\Attributes\Endpoint;
 use Knuckles\Scribe\Attributes\Group;
 use Knuckles\Scribe\Attributes\QueryParam;
 use Knuckles\Scribe\Attributes\Response as ScribeResponse;
+use Knuckles\Scribe\Attributes\UrlParam;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 #[Group('Sets')]
@@ -37,11 +39,31 @@ class SetController extends Controller
             array_merge(
                 $request->validated(),
                 [
-                    'status'   => Status::Draft,
+                    'status' => Status::Draft,
                     'owner_id' => auth()->id(),
                 ]
             )
         );
+
+        return new SetResource($set);
+    }
+
+    #[Endpoint(title: 'Show a set')]
+    #[ScribeResponse(content: SetControllerExamples::SHOW, status: SymfonyResponse::HTTP_OK)]
+    public function show(Set $set): SetResource
+    {
+        Gate::authorize('manage', $set);
+
+        return new SetResource($set);
+    }
+
+    #[Endpoint(title: 'Show a set by external ID')]
+    #[UrlParam(name: 'external_id', type: 'string', description: 'ID defined by client', example: 'external_id')]
+    #[ScribeResponse(content: SetControllerExamples::SHOW, status: SymfonyResponse::HTTP_OK)]
+    public function showByExternalId(string $external_id): SetResource
+    {
+        $set = Set::where('external_id', $external_id)->firstOrFail();
+        Gate::authorize('manage', $set);
 
         return new SetResource($set);
     }

@@ -36,7 +36,7 @@ class StoreRequest extends Request
                 'example' => 'What`s your opinion on ducks?',
             ],
             Keys::CONTEXT_TYPE => [
-                'description' => 'ENUM: [question_answer]',
+                'description' => 'Enum.',
                 'example'     => ContextType::QuestionAnswer->value,
             ],
         ];

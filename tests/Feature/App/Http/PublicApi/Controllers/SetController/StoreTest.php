@@ -25,16 +25,16 @@ class StoreTest extends TestCase
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
 
-        $routeName = 'api.public.sets.store';
-        $url       = URL::route($routeName);
-        $data      = [
-            'name'         => $name = 'name',
-            'external_id'  => $externalId = 'external_id',
-            'callback_url' => $callbackURL = 'https://callback.url',
-            'context'      => $context = 'context',
-            'context_type' => $contextType = ContextType::QuestionAnswer->value,
-        ];
-        $response  = $this->post($url, $data);
+        $response = $this->post(
+            URL::route('api.public.sets.store'),
+            [
+                'name'         => $name = 'name',
+                'external_id'  => $externalId = 'external_id',
+                'callback_url' => $callbackURL = 'https://callback.url',
+                'context'      => $context = 'context',
+                'context_type' => $contextType = ContextType::QuestionAnswer->value,
+            ]
+        );
 
         $response->assertCreated();
         $this->assertDatabaseHas(Set::class, [

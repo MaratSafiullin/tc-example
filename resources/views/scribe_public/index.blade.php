@@ -66,6 +66,15 @@
                                                     <li class="tocify-item level-2" data-unique="sets-GETapi-public-sets">
                                 <a href="#sets-GETapi-public-sets">List sets</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="sets-POSTapi-public-sets">
+                                <a href="#sets-POSTapi-public-sets">Store a set</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="sets-GETapi-public-sets--id-">
+                                <a href="#sets-GETapi-public-sets--id-">Show a set</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="sets-GETapi-public-sets-by-external-id--external_id-">
+                                <a href="#sets-GETapi-public-sets-by-external-id--external_id-">Show a set by external ID</a>
+                            </li>
                                                                         </ul>
                             </ul>
             </div>
@@ -77,7 +86,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: May 24, 2025</li>
+        <li>Last updated: May 27, 2025</li>
     </ul>
 </div>
 
@@ -242,6 +251,420 @@ You can check the Dev Tools console for debugging information.</code></pre>
 <p>Example: <code>10</code></p>
             </div>
                 </form>
+
+                    <h2 id="sets-POSTapi-public-sets">Store a set</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-POSTapi-public-sets">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request POST \
+    "http://localhost:8080/api/public/sets" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
+    --data "{
+    \"name\": \"New set\",
+    \"external_id\": \"external_id\",
+    \"context_type\": \"question_answer\",
+    \"context\": \"What`s your opinion on ducks?\",
+    \"callback_url\": \"https:\\/\\/my.domain\\/tc-callback\"
+}"
+</code></pre></div>
+
+</span>
+
+<span id="example-responses-POSTapi-public-sets">
+            <blockquote>
+            <p>Example response (201):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;external_id&quot;: &quot;external_id&quot;,
+            &quot;owner_id&quot;: 1,
+            &quot;name&quot;: &quot;New set&quot;,
+            &quot;status&quot;: &quot;draft&quot;,
+            &quot;context_type&quot;: &quot;question_answer&quot;,
+            &quot;context&quot;: &quot;What`s your opinion on ducks?&quot;,
+            &quot;callback_url&quot;: &quot;https://my.domain/tc-callback&quot;
+        }
+    ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-POSTapi-public-sets" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-POSTapi-public-sets"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-POSTapi-public-sets"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-POSTapi-public-sets" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-POSTapi-public-sets">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-POSTapi-public-sets" data-method="POST"
+      data-path="api/public/sets"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('POSTapi-public-sets', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-black">POST</small>
+            <b><code>api/public/sets</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="POSTapi-public-sets"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="POSTapi-public-sets"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="POSTapi-public-sets"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <h4 class="fancy-heading-panel"><b>Body Parameters</b></h4>
+        <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="name"                data-endpoint="POSTapi-public-sets"
+               value="New set"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>New set</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>external_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="external_id"                data-endpoint="POSTapi-public-sets"
+               value="external_id"
+               data-component="body">
+    <br>
+<p>Must not be greater than 255 characters. Example: <code>external_id</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>context_type</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="context_type"                data-endpoint="POSTapi-public-sets"
+               value="question_answer"
+               data-component="body">
+    <br>
+<p>Enum. Example: <code>question_answer</code></p>
+Must be one of:
+<ul style="list-style-type: square;"><li><code>question_answer</code></li></ul>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>context</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="context"                data-endpoint="POSTapi-public-sets"
+               value="What`s your opinion on ducks?"
+               data-component="body">
+    <br>
+<p>Must not be greater than 65535 characters. Example: <code>What</code>s your opinion on ducks?`</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>callback_url</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="callback_url"                data-endpoint="POSTapi-public-sets"
+               value="https://my.domain/tc-callback"
+               data-component="body">
+    <br>
+<p>Must be a valid URL. Must not be greater than 255 characters. Example: <code>https://my.domain/tc-callback</code></p>
+        </div>
+        </form>
+
+                    <h2 id="sets-GETapi-public-sets--id-">Show a set</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-public-sets--id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8080/api/public/sets/16" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-public-sets--id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;external_id&quot;: &quot;external_id&quot;,
+            &quot;owner_id&quot;: 1,
+            &quot;name&quot;: &quot;New set&quot;,
+            &quot;status&quot;: &quot;draft&quot;,
+            &quot;context_type&quot;: &quot;question_answer&quot;,
+            &quot;context&quot;: &quot;What`s your opinion on ducks?&quot;,
+            &quot;callback_url&quot;: &quot;https://my.domain/tc-callback&quot;
+        }
+    ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-public-sets--id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-public-sets--id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-public-sets--id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-public-sets--id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-public-sets--id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-public-sets--id-" data-method="GET"
+      data-path="api/public/sets/{id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-public-sets--id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/public/sets/{id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-public-sets--id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-public-sets--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-public-sets--id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="id"                data-endpoint="GETapi-public-sets--id-"
+               value="16"
+               data-component="url">
+    <br>
+<p>The ID of the set. Example: <code>16</code></p>
+            </div>
+                    </form>
+
+                    <h2 id="sets-GETapi-public-sets-by-external-id--external_id-">Show a set by external ID</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+
+
+<span id="example-requests-GETapi-public-sets-by-external-id--external_id-">
+<blockquote>Example request:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "http://localhost:8080/api/public/sets/by-external-id/external_id" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-public-sets-by-external-id--external_id-">
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;external_id&quot;: &quot;external_id&quot;,
+            &quot;owner_id&quot;: 1,
+            &quot;name&quot;: &quot;New set&quot;,
+            &quot;status&quot;: &quot;draft&quot;,
+            &quot;context_type&quot;: &quot;question_answer&quot;,
+            &quot;context&quot;: &quot;What`s your opinion on ducks?&quot;,
+            &quot;callback_url&quot;: &quot;https://my.domain/tc-callback&quot;
+        }
+    ]
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-public-sets-by-external-id--external_id-" hidden>
+    <blockquote>Received response<span
+                id="execution-response-status-GETapi-public-sets-by-external-id--external_id-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-public-sets-by-external-id--external_id-"
+      data-empty-response-text="<Empty response>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-public-sets-by-external-id--external_id-" hidden>
+    <blockquote>Request failed with error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-public-sets-by-external-id--external_id-">
+
+Tip: Check that you&#039;re properly connected to the network.
+If you&#039;re a maintainer of ths API, verify that your API is running and you&#039;ve enabled CORS.
+You can check the Dev Tools console for debugging information.</code></pre>
+</span>
+<form id="form-GETapi-public-sets-by-external-id--external_id-" data-method="GET"
+      data-path="api/public/sets/by-external-id/{external_id}"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-public-sets-by-external-id--external_id-', this);">
+    <h3>
+        Request&nbsp;&nbsp;&nbsp;
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/public/sets/by-external-id/{external_id}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Headers</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-public-sets-by-external-id--external_id-"
+               value="Bearer {YOUR_AUTH_KEY}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {YOUR_AUTH_KEY}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-public-sets-by-external-id--external_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-public-sets-by-external-id--external_id-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>URL Parameters</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>external_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="external_id"                data-endpoint="GETapi-public-sets-by-external-id--external_id-"
+               value="external_id"
+               data-component="url">
+    <br>
+<p>ID defined by client Example: <code>external_id</code></p>
+            </div>
+                    </form>
 
             
 

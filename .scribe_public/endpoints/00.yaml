@@ -52,3 +52,201 @@ endpoints:
     method: null
     route: null
     custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/public/sets
+    metadata:
+      groupName: Sets
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a set'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: 'New set'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      external_id:
+        name: external_id
+        description: 'Must not be greater than 255 characters.'
+        required: false
+        example: external_id
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      context_type:
+        name: context_type
+        description: Enum.
+        required: true
+        example: question_answer
+        type: string
+        enumValues:
+          - question_answer
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      context:
+        name: context
+        description: 'Must not be greater than 65535 characters.'
+        required: true
+        example: 'What`s your opinion on ducks?'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      callback_url:
+        name: callback_url
+        description: 'Must be a valid URL. Must not be greater than 255 characters.'
+        required: false
+        example: 'https://my.domain/tc-callback'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: 'New set'
+      external_id: external_id
+      context_type: question_answer
+      context: 'What`s your opinion on ducks?'
+      callback_url: 'https://my.domain/tc-callback'
+    fileParameters: []
+    responses:
+      -
+        status: 201
+        content: '{"data":[{"id":1,"external_id":"external_id","owner_id":1,"name":"New set","status":"draft","context_type":"question_answer","context":"What`s your opinion on ducks?","callback_url":"https:\/\/my.domain\/tc-callback"}]}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/public/sets/{id}'
+    metadata:
+      groupName: Sets
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Show a set'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the set.'
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 16
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":1,"external_id":"external_id","owner_id":1,"name":"New set","status":"draft","context_type":"question_answer","context":"What`s your opinion on ducks?","callback_url":"https:\/\/my.domain\/tc-callback"}]}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/public/sets/by-external-id/{external_id}'
+    metadata:
+      groupName: Sets
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Show a set by external ID'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      external_id:
+        name: external_id
+        description: 'ID defined by client'
+        required: true
+        example: external_id
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      external_id: external_id
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"data":[{"id":1,"external_id":"external_id","owner_id":1,"name":"New set","status":"draft","context_type":"question_answer","context":"What`s your opinion on ducks?","callback_url":"https:\/\/my.domain\/tc-callback"}]}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
+    controller: null
+    method: null
+    route: null
+    custom: []

@@ -13,26 +13,28 @@ use PHPUnit\Framework\Attributes\Test;
 use Tests\RefreshDatabase;
 use Tests\TestCase;
 
-#[CoversMethod(SetController::class, 'index')]
-class IndexTest extends TestCase
+#[CoversMethod(SetController::class, 'showByExternalId')]
+class ShowByExternalIdTest extends TestCase
 {
     use RefreshDatabase;
 
     #[Test]
-    public function itReturnsUserSetsList(): void
+    public function itReturnsSet(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
 
-        Set::factory()->usingOwner($user)->count($countForUser = 15)->create();
-        Set::factory()->count(20)->create();
+        $set = Set::factory()->usingOwner($user)->create(['external_id' => $externalId = 'external-id-123']);
 
         $response = $this->get(
-            URL::route('api.public.sets.index')
+            URL::route('api.public.sets.show-by-external-id', $externalId)
         );
 
         $response->assertOk();
-        $response->assertJsonPath('meta.total', $countForUser);
-        $response->assertJsonCount(10, 'data');
+        $response->assertJson([
+            'data' => [
+                'external_id' => $externalId,
+            ],
+        ]);
     }
 }
