@@ -4,8 +4,10 @@ namespace App\Http\PublicApi\Controllers;
 
 use App\Http\Core\Controllers\Controller;
 use App\Http\PublicApi\Controllers\ResponseExamples\SetControllerExamples;
+use App\Http\PublicApi\Request\SetController\StoreRequest;
 use App\Http\PublicApi\Resources\SetResource;
 use App\Models\Set;
+use App\Models\Set\Status;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Knuckles\Scribe\Attributes\Endpoint;
@@ -25,5 +27,22 @@ class SetController extends Controller
         $page = Set::where('owner_id', auth()->id())->paginate($request->perPage());
 
         return SetResource::collection($page);
+    }
+
+    #[Endpoint(title: 'Store a set')]
+    #[ScribeResponse(content: SetControllerExamples::STORE, status: SymfonyResponse::HTTP_CREATED)]
+    public function store(StoreRequest $request): SetResource
+    {
+        $set = Set::create(
+            array_merge(
+                $request->validated(),
+                [
+                    'status'   => Status::Draft,
+                    'owner_id' => auth()->id(),
+                ]
+            )
+        );
+
+        return new SetResource($set);
     }
 }

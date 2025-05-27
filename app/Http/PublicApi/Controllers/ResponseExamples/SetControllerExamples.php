@@ -3,6 +3,7 @@
 namespace App\Http\PublicApi\Controllers\ResponseExamples;
 
 use App\Http\Core\Docs;
+use App\Models\Set\ContextType;
 use App\Models\Set\Status;
 
 class SetControllerExamples
@@ -46,6 +47,20 @@ class SetControllerExamples
             'current_page' => 1,
             'last_page'    => 1,
             'per_page'     => 10,
+        ],
+    ];
+    public const STORE = [
+        'data' => [
+            [
+                'id'           => 1,
+                'external_id'  => 'external_id',
+                'owner_id'     => 1,
+                'name'         => 'New set',
+                'status'       => Status::Draft,
+                'context_type' => ContextType::QuestionAnswer,
+                'context'      => 'What`s your opinion on ducks?',
+                'callback_url' => 'https://my.domain/tc-callback',
+            ],
         ],
     ];
 }

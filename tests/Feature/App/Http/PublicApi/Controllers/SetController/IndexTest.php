@@ -24,7 +24,7 @@ class IndexTest extends TestCase
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
 
-        Set::factory()->usingOwner($user)->count(20)->create();
+        Set::factory()->usingOwner($user)->count($countForUser = 15)->create();
         Set::factory()->count(20)->create();
 
         $routeName = 'api.public.sets.index';
@@ -33,7 +33,7 @@ class IndexTest extends TestCase
         $response  = $this->get($url, $headers);
 
         $response->assertOk();
-        $response->assertJsonPath('meta.total', 20);
+        $response->assertJsonPath('meta.total', $countForUser);
         $response->assertJsonCount(10, 'data');
     }
 }
