@@ -2,6 +2,7 @@
 
 namespace App\Http\PublicApi\Controllers;
 
+use App\Http\Core\Controllers\ChecksModelStateRules;
 use App\Http\Core\Controllers\Controller;
 use App\Http\PublicApi\Controllers\ResponseExamples\SetControllerExamples;
 use App\Http\PublicApi\Request\SetController\StoreRequest;
@@ -9,6 +10,7 @@ use App\Http\PublicApi\Resources\SetResource;
 use App\Models\Set;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Gate;
 use Knuckles\Scribe\Attributes\Endpoint;
 use Knuckles\Scribe\Attributes\Group;
@@ -20,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 #[Group('Sets')]
 class SetController extends Controller
 {
+    use ChecksModelStateRules;
+
     #[Endpoint(title: 'List sets')]
     #[QueryParam(name: 'per_page', type: 'integer', required: false, example: 10)]
     #[ScribeResponse(content: SetControllerExamples::INDEX, status: SymfonyResponse::HTTP_OK)]
@@ -30,7 +34,7 @@ class SetController extends Controller
         return SetResource::collection($page);
     }
 
-    #[Endpoint(title: 'Store a set')]
+    #[Endpoint(title: 'Store set')]
     #[ScribeResponse(content: SetControllerExamples::STORE, status: SymfonyResponse::HTTP_CREATED)]
     public function store(StoreRequest $request): SetResource
     {
@@ -46,7 +50,7 @@ class SetController extends Controller
         return new SetResource($set);
     }
 
-    #[Endpoint(title: 'Show a set')]
+    #[Endpoint(title: 'Show set')]
     #[ScribeResponse(content: SetControllerExamples::SHOW, status: SymfonyResponse::HTTP_OK)]
     public function show(Set $set): SetResource
     {
@@ -55,7 +59,7 @@ class SetController extends Controller
         return new SetResource($set);
     }
 
-    #[Endpoint(title: 'Show a set by external ID')]
+    #[Endpoint(title: 'Show set by external ID')]
     #[UrlParam(name: 'external_id', type: 'string', description: 'ID defined by client', example: 'external_id')]
     #[ScribeResponse(content: SetControllerExamples::SHOW, status: SymfonyResponse::HTTP_OK)]
     public function showByExternalId(string $external_id): SetResource
@@ -64,5 +68,18 @@ class SetController extends Controller
         Gate::authorize('manage', $set);
 
         return new SetResource($set);
+    }
+
+    #[Endpoint(title: 'Delete set')]
+    #[ScribeResponse(status: SymfonyResponse::HTTP_NO_CONTENT)]
+    public function delete(Set $set): Response
+    {
+        Gate::authorize('manage', $set);
+
+        $this->checkModelStateRule($set, 'status', 'canDelete');
+
+        $set->delete();
+
+        return response()->noContent();
     }
 }

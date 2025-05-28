@@ -11,4 +11,6 @@ Route::group(['prefix' => 'sets', 'as' => 'sets.'], function (): void {
     Route::get('/{set}', [SetController::class, 'show'])->name('show');
 
     Route::get('by-external-id/{external_id}', [SetController::class, 'showByExternalId'])->name('show-by-external-id');
+
+    Route::delete('/{set}', [SetController::class, 'delete'])->name('delete');
 });

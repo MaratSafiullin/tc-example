@@ -13,13 +13,13 @@ use PHPUnit\Framework\Attributes\Test;
 use Tests\RefreshDatabase;
 use Tests\TestCase;
 
-#[CoversMethod(SetController::class, 'show')]
-class ShowTest extends TestCase
+#[CoversMethod(SetController::class, 'delete')]
+class DeleteTest extends TestCase
 {
     use RefreshDatabase;
 
     #[Test]
-    public function itReturnsSet(): void
+    public function itDeletesSet(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
@@ -27,19 +27,17 @@ class ShowTest extends TestCase
         $ownSet    = Set::factory()->usingOwner($user)->create();
         $randomSet = Set::factory()->create();
 
-        $response = $this->get(
-            URL::route('api.public.sets.show', $ownSet->getRouteKey())
+        $response = $this->delete(
+            URL::route('api.public.sets.delete', $ownSet->getRouteKey())
         );
 
-        $response->assertOk();
-        $response->assertJson([
-            'data' => [
-                'id' => $ownSet->getRouteKey(),
-            ],
-        ]);
+        $response->assertNoContent();
+        $this->assertDatabaseMissing(Set::class, ['id' => $ownSet->id]);
 
-        $this->get(
-            URL::route('api.public.sets.show', $randomSet->getRouteKey())
+        $this->delete(
+            URL::route('api.public.sets.delete', $randomSet->getRouteKey())
         )->assertForbidden();
     }
+
+    //TODO: Add tests for state rules
 }

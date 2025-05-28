@@ -2,7 +2,14 @@
 
 namespace App\ModesStates\Set;
 
+use Illuminate\Auth\Access\Response;
+
 class CallbackSent extends Status
 {
     public static string $name = StatusNames::CallbackSent->value;
+
+    public function canDelete(): Response
+    {
+        return Response::allow();
+    }
 }
