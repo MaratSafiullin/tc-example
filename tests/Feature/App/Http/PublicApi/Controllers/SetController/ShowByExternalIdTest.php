@@ -19,13 +19,25 @@ class ShowByExternalIdTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
+    public function itChecksAccess(): void
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user, [Ability::PublicApi->value]);
+
+        Set::factory()->create(['external_id' => $randomExternalId = 'external-id-random']);
+
+        $this->get(
+            URL::route('api.public.sets.show-by-external-id', $randomExternalId)
+        )->assertNotFound();
+    }
+
+    #[Test]
     public function itReturnsSet(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
 
         Set::factory()->usingOwner($user)->create(['external_id' => $externalId = 'external-id-123']);
-        Set::factory()->create(['external_id' => $randomExternalId = 'external-id-random']);
 
         $response = $this->get(
             URL::route('api.public.sets.show-by-external-id', $externalId)
@@ -37,9 +49,5 @@ class ShowByExternalIdTest extends TestCase
                 'external_id' => $externalId,
             ],
         ]);
-
-        $this->get(
-            URL::route('api.public.sets.show-by-external-id', $randomExternalId)
-        )->assertForbidden();
     }
 }

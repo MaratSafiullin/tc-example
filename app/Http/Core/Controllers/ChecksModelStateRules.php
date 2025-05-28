@@ -12,22 +12,20 @@ trait ChecksModelStateRules
     {
         $defaultErrorMessage = 'This action is not allowed in current state.';
 
-        $response = $model->$stateField->$rule();
+        $result = $model->$stateField->$rule();
 
-        if ($response === false) {
-            throw new ConflictHttpException($defaultErrorMessage);
+        if (is_a($result, Response::class)) {
+            if ($result->allowed()) {
+                return;
+            }
+
+            throw new ConflictHttpException($result->message() ?? $defaultErrorMessage);
         }
 
-        if ($response === true) {
+        if ($result === true) {
             return;
         }
 
-        if (! is_a($response, Response::class)) {
-            throw new ConflictHttpException($defaultErrorMessage);
-        }
-
-        if ($response->denied()) {
-            throw new ConflictHttpException($response->message() ?? $defaultErrorMessage);
-        }
+        throw new ConflictHttpException($defaultErrorMessage);
     }
 }

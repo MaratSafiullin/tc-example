@@ -64,8 +64,8 @@ class SetController extends Controller
     #[ScribeResponse(content: SetControllerExamples::SHOW, status: SymfonyResponse::HTTP_OK)]
     public function showByExternalId(string $external_id): SetResource
     {
-        $set = Set::where('external_id', $external_id)->firstOrFail();
-        Gate::authorize('manage', $set);
+        $set = auth()->user()->sets()->where('external_id', $external_id)->firstOrFail();
+        Gate::authorize('manage', $set); //excessive in this case, but consistent and accounts for rules change
 
         return new SetResource($set);
     }

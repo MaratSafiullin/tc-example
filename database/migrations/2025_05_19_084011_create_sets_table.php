@@ -20,7 +20,8 @@ return new class extends Migration {
             $table->timestamp('do_callback_after')->nullable();
 
             $table->timestamps();
-            //TODO make external_id/owner_id unique
+
+            $table->unique(['owner_id', 'external_id']);
         });
     }
 

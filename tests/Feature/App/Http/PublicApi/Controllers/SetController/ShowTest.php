@@ -19,13 +19,25 @@ class ShowTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
+    public function itChecksAccess(): void
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user, [Ability::PublicApi->value]);
+
+        $randomSet = Set::factory()->create();
+
+        $this->get(
+            URL::route('api.public.sets.show', $randomSet->getRouteKey())
+        )->assertForbidden();
+    }
+
+    #[Test]
     public function itReturnsSet(): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
 
         $ownSet    = Set::factory()->usingOwner($user)->create();
-        $randomSet = Set::factory()->create();
 
         $response = $this->get(
             URL::route('api.public.sets.show', $ownSet->getRouteKey())
@@ -37,9 +49,5 @@ class ShowTest extends TestCase
                 'id' => $ownSet->getRouteKey(),
             ],
         ]);
-
-        $this->get(
-            URL::route('api.public.sets.show', $randomSet->getRouteKey())
-        )->assertForbidden();
     }
 }
