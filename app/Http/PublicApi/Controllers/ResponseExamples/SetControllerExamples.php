@@ -4,7 +4,7 @@ namespace App\Http\PublicApi\Controllers\ResponseExamples;
 
 use App\Http\Core\Docs;
 use App\Models\Set\ContextType;
-use App\Models\Set\Status;
+use App\ModesStates\Set\StatusNames;
 
 class SetControllerExamples
 {
@@ -15,7 +15,7 @@ class SetControllerExamples
                 'owner_id'     => 1,
                 'external_id'  => null,
                 'name'         => 'Set 1',
-                'status'       => Status::Draft,
+                'status'       => StatusNames::Draft,
                 'context_type' => 'question_answer',
                 'context'      => 'Question text',
                 'callback_url' => 'https://my.domain/tc-callback',
@@ -26,7 +26,7 @@ class SetControllerExamples
                 'owner_id'     => 1,
                 'external_id'  => 'custom_id',
                 'name'         => 'Set 2',
-                'status'       => Status::Processing,
+                'status'       => StatusNames::Processing,
                 'context_type' => 'question_answer',
                 'context'      => 'Question text',
                 'callback_url' => null,
@@ -56,7 +56,7 @@ class SetControllerExamples
                 'external_id'  => 'external_id',
                 'owner_id'     => 1,
                 'name'         => 'New set',
-                'status'       => Status::Draft,
+                'status'       => StatusNames::Draft,
                 'context_type' => ContextType::QuestionAnswer,
                 'context'      => 'What`s your opinion on ducks?',
                 'callback_url' => 'https://my.domain/tc-callback',

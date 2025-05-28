@@ -7,6 +7,7 @@ use App\Models\AccessToken\Ability;
 use App\Models\Set;
 use App\Models\Set\ContextType;
 use App\Models\User;
+use App\ModesStates\Set\Draft;
 use Illuminate\Support\Facades\URL;
 use Laravel\Sanctum\Sanctum;
 use PHPUnit\Framework\Attributes\CoversMethod;
@@ -41,7 +42,7 @@ class StoreTest extends TestCase
             'external_id'  => $externalId,
             'owner_id'     => $user->id,
             'name'         => $name,
-            'status'       => Set\Status::Draft,
+            'status'       => Draft::$name,
             'callback_url' => $callbackURL,
             'context'      => $context,
             'context_type' => $contextType,

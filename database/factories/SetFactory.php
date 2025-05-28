@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Set;
 use App\Models\Set\ContextType;
-use App\Models\Set\Status;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,7 +16,6 @@ class SetFactory extends Factory
         return [
             'owner_id'     => User::factory(),
             'name'         => 'Set name',
-            'status'       => Status::Draft,
             'context'      => '',
             'context_type' => ContextType::QuestionAnswer,
         ];

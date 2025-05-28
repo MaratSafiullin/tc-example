@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Set;
+namespace App\ModesStates\Set;
 
-enum Status: string
+enum StatusNames: string
 {
     case Draft           = 'draft';
     case Processing      = 'processing';

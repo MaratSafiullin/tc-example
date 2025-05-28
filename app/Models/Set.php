@@ -3,15 +3,18 @@
 namespace App\Models;
 
 use App\Models\Set\ContextType;
-use App\Models\Set\Status;
+use App\ModesStates\Set\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\ModelStates\HasStates;
+use Spatie\ModelStates\HasStatesContract;
 
-class Set extends Model
+class Set extends Model implements HasStatesContract
 {
     use HasFactory;
+    use HasStates;
 
     protected $guarded = [];
 
