@@ -14,7 +14,12 @@ class ThemeFactory extends Factory
     {
         return [
             'set_id' => Set::factory(),
-            'name'      => $this->faker->safeEmailDomain,
+            'name'   => $this->faker->unique()->colorName,
         ];
+    }
+
+    public function usingSet(Set $set): static
+    {
+        return $this->state(fn() => ['set_id' => $set->id]);
     }
 }

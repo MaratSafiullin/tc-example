@@ -13,5 +13,6 @@ Route::group(
     ],
     function (): void {
         Route::group([], __DIR__ . '/api/public/sets.php');
+        Route::group([], __DIR__ . '/api/public/themes.php');
     }
 );

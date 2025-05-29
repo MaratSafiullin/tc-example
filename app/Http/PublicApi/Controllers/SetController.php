@@ -29,7 +29,7 @@ class SetController extends Controller
     #[ScribeResponse(content: SetControllerExamples::INDEX, status: SymfonyResponse::HTTP_OK)]
     public function index(Request $request): AnonymousResourceCollection
     {
-        $page = Set::where('owner_id', auth()->id())->paginate($request->perPage());
+        $page = auth()->user()->sets()->orderBy('id', 'DESC')->paginate($request->perPage());
 
         return SetResource::collection($page);
     }

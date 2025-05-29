@@ -28,11 +28,11 @@ class IndexTest extends TestCase
         Set::factory()->count(20)->create();
 
         $response = $this->get(
-            URL::route('api.public.sets.index')
+            URL::route('api.public.sets.index', ['per_page' => $perPage = 5])
         );
 
         $response->assertOk();
         $response->assertJsonPath('meta.total', $countForUser);
-        $response->assertJsonCount(10, 'data');
+        $response->assertJsonCount($perPage, 'data');
     }
 }

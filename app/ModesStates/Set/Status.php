@@ -18,4 +18,9 @@ abstract class Status extends State
     {
         return Response::deny();
     }
+
+    public function canReadContent(): Response
+    {
+        return Response::allow();
+    }
 }
