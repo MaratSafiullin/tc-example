@@ -13,7 +13,13 @@ class StoreRequest extends Request
     {
         return [
             Keys::NAME         => ['required', 'string', 'max:255'],
-            Keys::EXTERNAL_ID  => ['string', 'max:255'],
+            Keys::EXTERNAL_ID  => [
+                'string',
+                'max:255',
+                Rule::unique('sets')->where(
+                    fn($query) => $query->where('owner_id', auth()->id())
+                ),
+            ],
             Keys::CONTEXT_TYPE => ['required', Rule::in(ContextType::cases())],
             Keys::CONTEXT      => ['required', 'string', 'max:65535'],
             Keys::CALLBACK_URL => ['url', 'max:255'],
