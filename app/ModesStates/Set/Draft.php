@@ -12,4 +12,9 @@ class Draft extends Status
     {
         return Response::allow();
     }
+
+    public function canAddContent(): Response
+    {
+        return Response::allow();
+    }
 }

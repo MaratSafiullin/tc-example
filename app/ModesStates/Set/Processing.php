@@ -10,6 +10,6 @@ class Processing extends Status
 
     public function canReadContent(): Response
     {
-        return Response::deny();
+        return Response::deny('Cannot read content in a set that is being processed.');
     }
 }

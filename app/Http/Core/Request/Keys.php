@@ -10,4 +10,5 @@ class Keys
     public const CONTEXT_TYPE = 'context_type';
     public const CONTEXT      = 'context';
     public const CALLBACK_URL = 'callback_url';
+    public const THEMES       = 'themes';
 }

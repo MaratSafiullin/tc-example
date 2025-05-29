@@ -23,4 +23,9 @@ abstract class Status extends State
     {
         return Response::allow();
     }
+
+    public function canAddContent(): Response
+    {
+        return Response::deny('Content can be added only to a set in draft status.');
+    }
 }
