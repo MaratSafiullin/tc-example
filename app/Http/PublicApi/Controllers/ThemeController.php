@@ -31,7 +31,7 @@ class ThemeController extends Controller
     public function index(Request $request, Set $set): AnonymousResourceCollection
     {
         Gate::authorize('manage', $set);
-        $this->checkModelStateRule($set, 'status', 'canReadContent');
+        $this->checkModelStateRule(fn() => $set->status->canReadContent());
 
         $page = $set->themes()->paginate($request->perPage());
 
@@ -43,13 +43,13 @@ class ThemeController extends Controller
     public function store(StoreRequest $request, Set $set): Response
     {
         Gate::authorize('manage', $set);
-        $this->checkModelStateRule($set, 'status', 'canAddContent');
-        //TODO add max allowed themes in set check
+        $themes = $request->validated(Keys::THEMES);
+        $this->checkModelStateRule(fn() => $set->status->canAddThemes(count($themes)));
 
-        $data = collect($request->validated(Keys::THEMES))->map(
-            fn(array $themes) => [
+        $data = collect($themes)->map(
+            fn(array $theme) => [
                 'set_id' => $set->id,
-                'name'   => $themes['name'],
+                'name'   => $theme['name'],
             ]
         );
         Theme::insert($data->toArray());

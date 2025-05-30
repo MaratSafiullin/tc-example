@@ -7,6 +7,7 @@ use App\Models\AccessToken\Ability;
 use App\Models\Set;
 use App\Models\Theme;
 use App\Models\User;
+use App\ModesStates\Set\Completed;
 use App\ModesStates\Set\Draft;
 use App\ModesStates\Set\Processing;
 use Illuminate\Support\Facades\URL;
@@ -78,6 +79,7 @@ class IndexTest extends TestCase
     {
         return [
             ['status' => Draft::class, 'allowed' => true],
+            ['status' => Completed::class, 'allowed' => true],
             ['status' => Processing::class, 'allowed' => false],
         ];
     }

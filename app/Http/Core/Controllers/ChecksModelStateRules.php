@@ -2,17 +2,17 @@
 
 namespace App\Http\Core\Controllers;
 
+use Closure;
 use Illuminate\Auth\Access\Response;
-use Illuminate\Database\Eloquent\Model;
 use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 trait ChecksModelStateRules
 {
-    private function checkModelStateRule(Model $model, string $stateField, string $rule): void
+    private function checkModelStateRule(Closure $check): void
     {
         $defaultErrorMessage = 'This action is not allowed in current state.';
 
-        $result = $model->$stateField->$rule();
+        $result = $check();
 
         if (is_a($result, Response::class)) {
             if ($result->allowed()) {

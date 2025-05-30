@@ -76,7 +76,7 @@ class SetController extends Controller
     {
         Gate::authorize('manage', $set);
 
-        $this->checkModelStateRule($set, 'status', 'canDelete');
+        $this->checkModelStateRule(fn() => $set->status->canDelete());
 
         $set->delete();
 

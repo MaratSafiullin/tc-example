@@ -6,6 +6,7 @@ use App\Http\PublicApi\Controllers\SetController;
 use App\Models\AccessToken\Ability;
 use App\Models\Set;
 use App\Models\User;
+use App\ModesStates\Set\Completed;
 use App\ModesStates\Set\Draft;
 use App\ModesStates\Set\Processing;
 use Illuminate\Support\Facades\URL;
@@ -52,7 +53,7 @@ class DeleteTest extends TestCase
 
     #[Test]
     #[DataProvider('stateRuleData')]
-    public function itChecksStateRule(string $status, bool $allowed): void
+    public function itChecksStatus(string $status, bool $allowed): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
@@ -72,6 +73,7 @@ class DeleteTest extends TestCase
     {
         return [
             ['status' => Draft::class, 'allowed' => true],
+            ['status' => Completed::class, 'allowed' => true],
             ['status' => Processing::class, 'allowed' => false],
         ];
     }

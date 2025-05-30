@@ -11,4 +11,5 @@ class Keys
     public const CONTEXT      = 'context';
     public const CALLBACK_URL = 'callback_url';
     public const THEMES       = 'themes';
+    public const SET          = 'set';
 }
