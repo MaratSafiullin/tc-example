@@ -13,8 +13,8 @@ class ThemeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'           => $this->resource->getRouteKey(),
-            'name'         => $this->resource->name,
+            'id'   => $this->resource->getRouteKey(),
+            'name' => $this->resource->name,
         ];
     }
 }

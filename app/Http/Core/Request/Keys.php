@@ -12,4 +12,6 @@ class Keys
     public const CALLBACK_URL = 'callback_url';
     public const THEMES       = 'themes';
     public const SET          = 'set';
+    public const TEXTS        = 'texts';
+    public const TEXT         = 'text';
 }
