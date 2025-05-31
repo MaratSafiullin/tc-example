@@ -8,6 +8,8 @@ use Spatie\ModelStates\StateConfig;
 
 abstract class Status extends State
 {
+    private const ADD_CONTENT_ERROR_MESSAGE = 'Content can be added only to a set in draft status.';
+
     public static function config(): StateConfig
     {
         return parent::config()
@@ -26,6 +28,11 @@ abstract class Status extends State
 
     public function canAddThemes(int $count): Response
     {
-        return Response::deny('Content can be added only to a set in draft status.');
+        return Response::deny(self::ADD_CONTENT_ERROR_MESSAGE);
+    }
+
+    public function canAddTexts(int $count): Response
+    {
+        return Response::deny(self::ADD_CONTENT_ERROR_MESSAGE);
     }
 }

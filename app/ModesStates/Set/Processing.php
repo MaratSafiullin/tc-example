@@ -6,7 +6,7 @@ use Illuminate\Auth\Access\Response;
 
 class Processing extends Status
 {
-    public static string $name = StatusNames::Processing->value;
+    public static string $name = StatusName::Processing->value;
 
     public function canReadContent(): Response
     {

@@ -38,7 +38,7 @@ class ThemeController extends Controller
         return ThemeResource::collection($page);
     }
 
-    #[Endpoint(title: 'Store themes (bulk)')]
+    #[Endpoint(title: 'Store themes')]
     #[ScribeResponse(status: SymfonyResponse::HTTP_NO_CONTENT)]
     public function store(StoreRequest $request, Set $set): Response
     {

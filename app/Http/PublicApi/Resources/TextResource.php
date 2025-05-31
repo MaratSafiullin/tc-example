@@ -18,6 +18,7 @@ class TextResource extends JsonResource
             'id'          => $this->resource->getRouteKey(),
             'external_id' => $this->resource->external_id,
             'text'        => $this->resource->text,
+            'tc_status'   => $this->resource->status,
             'themes'      => $this->themesData(),
         ];
     }

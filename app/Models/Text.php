@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
-use App\Models\Text\Status;
+use App\ModesStates\Set\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\ModelStates\HasStates;
+use Spatie\ModelStates\HasStatesContract;
 
-class Text extends Model
+class Text extends Model implements HasStatesContract
 {
     use HasFactory;
+    use HasStates;
 
     public $timestamps = false;
 

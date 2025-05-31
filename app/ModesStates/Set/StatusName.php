@@ -2,7 +2,7 @@
 
 namespace App\ModesStates\Set;
 
-enum StatusNames: string
+enum StatusName: string
 {
     case Draft           = 'draft';
     case Processing      = 'processing';

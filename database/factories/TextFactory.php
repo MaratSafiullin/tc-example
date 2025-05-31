@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Set;
 use App\Models\Text;
-use App\Models\Text\Status;
+use App\ModesStates\Text\Created;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TextFactory extends Factory
@@ -16,7 +16,6 @@ class TextFactory extends Factory
         return [
             'set_id' => Set::factory(),
             'text'   => $this->faker->sentence(),
-            'status' => Status::Created,
         ];
     }
 

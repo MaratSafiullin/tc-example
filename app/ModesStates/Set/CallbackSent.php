@@ -6,7 +6,7 @@ use Illuminate\Auth\Access\Response;
 
 class CallbackSent extends Status
 {
-    public static string $name = StatusNames::CallbackSent->value;
+    public static string $name = StatusName::CallbackSent->value;
 
     public function canDelete(): Response
     {

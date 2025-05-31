@@ -6,7 +6,7 @@ use Illuminate\Auth\Access\Response;
 
 class Completed extends Status
 {
-    public static string $name = StatusNames::Completed->value;
+    public static string $name = StatusName::Completed->value;
 
     public function canDelete(): Response
     {

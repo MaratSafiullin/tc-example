@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Text;
+namespace App\ModesStates\Text;
 
-enum Status: string
+enum StatusName: string
 {
     case Created   = 'created';
     case Processed = 'processed';
