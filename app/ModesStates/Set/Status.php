@@ -10,10 +10,15 @@ abstract class Status extends State
 {
     private const ADD_CONTENT_ERROR_MESSAGE = 'Content can be added only to a set in draft status.';
 
+    /**
+     * @throws \Spatie\ModelStates\Exceptions\InvalidConfig
+     */
     public static function config(): StateConfig
     {
         return parent::config()
-            ->default(Draft::class);
+            ->default(Draft::class)
+            ->allowTransition(Draft::class, Processing::class)
+            ->allowTransition(Processing::class, Completed::class);
     }
 
     public function canDelete(): Response

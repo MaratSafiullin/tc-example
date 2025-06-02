@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\ModesStates\Set\Status;
+use App\ModesStates\Text\Status;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -39,6 +39,6 @@ class Text extends Model implements HasStatesContract
 
     public function themes(): BelongsToMany
     {
-        return $this->belongsToMany(Theme::class)->using(ThemeText::class);
+        return $this->belongsToMany(Theme::class, 'theme_text')->using(ThemeText::class);
     }
 }
