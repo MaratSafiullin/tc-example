@@ -37,16 +37,16 @@ class ShowTest extends TestCase
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
 
-        $ownSet    = Set::factory()->usingOwner($user)->create();
+        $set    = Set::factory()->usingOwner($user)->create();
 
         $response = $this->get(
-            URL::route('api.public.sets.show', $ownSet->getRouteKey())
+            URL::route('api.public.sets.show', $set->getRouteKey())
         );
 
         $response->assertOk();
         $response->assertJson([
             'data' => [
-                'id' => $ownSet->getRouteKey(),
+                'id' => $set->getRouteKey(),
             ],
         ]);
     }

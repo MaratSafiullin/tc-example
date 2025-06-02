@@ -2,6 +2,7 @@
 
 namespace App\ModesStates\Set;
 
+use App\ModesStates\Set\Transitions\ToProcessing;
 use Illuminate\Auth\Access\Response;
 use Spatie\ModelStates\State;
 use Spatie\ModelStates\StateConfig;
@@ -17,7 +18,7 @@ abstract class Status extends State
     {
         return parent::config()
             ->default(Draft::class)
-            ->allowTransition(Draft::class, Processing::class)
+            ->allowTransition([Draft::class, Processing::class], Processing::class, ToProcessing::class)
             ->allowTransition(Processing::class, Completed::class);
     }
 
@@ -39,5 +40,10 @@ abstract class Status extends State
     public function canAddTexts(int $count): Response
     {
         return Response::deny(self::ADD_CONTENT_ERROR_MESSAGE);
+    }
+
+    public function canStartProcessing(): Response
+    {
+        return Response::deny();
     }
 }

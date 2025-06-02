@@ -41,14 +41,14 @@ class DeleteTest extends TestCase
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
 
-        $ownSet = Set::factory()->usingOwner($user)->create();
+        $set = Set::factory()->usingOwner($user)->create();
 
         $response = $this->delete(
-            URL::route('api.public.sets.delete', $ownSet->getRouteKey())
+            URL::route('api.public.sets.delete', $set->getRouteKey())
         );
 
         $response->assertNoContent();
-        $this->assertDatabaseMissing(Set::class, ['id' => $ownSet->id]);
+        $this->assertDatabaseMissing(Set::class, ['id' => $set->id]);
     }
 
     #[Test]
@@ -58,10 +58,10 @@ class DeleteTest extends TestCase
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
 
-        $ownSet = Set::factory()->usingOwner($user)->create(['status' => $status]);
+        $set = Set::factory()->usingOwner($user)->create(['status' => $status]);
 
         $response = $this->delete(
-            URL::route('api.public.sets.delete', $ownSet->getRouteKey())
+            URL::route('api.public.sets.delete', $set->getRouteKey())
         );
 
         $allowed ?

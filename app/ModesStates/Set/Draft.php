@@ -36,4 +36,9 @@ class Draft extends Status
 
         return Response::allow();
     }
+
+    public function canStartProcessing(): Response
+    {
+        return Response::allow();
+    }
 }

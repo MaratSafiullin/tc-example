@@ -8,6 +8,7 @@ use App\Http\PublicApi\Controllers\ResponseExamples\SetControllerExamples;
 use App\Http\PublicApi\Request\SetController\StoreRequest;
 use App\Http\PublicApi\Resources\SetResource;
 use App\Models\Set;
+use App\ModesStates\Set\Processing;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -81,5 +82,21 @@ class SetController extends Controller
         $set->delete();
 
         return response()->noContent();
+    }
+
+    /**
+     * @throws \Spatie\ModelStates\Exceptions\CouldNotPerformTransition
+     */
+    #[Endpoint(title: 'Starts TC process')]
+    #[ScribeResponse(content: 'Empty response', status: SymfonyResponse::HTTP_ACCEPTED)]
+    public function startTc(Set $set): Response
+    {
+        Gate::authorize('manage', $set);
+
+        $this->checkModelStateRule(fn() => $set->status->canStartProcessing());
+
+        $set->status->transitionTo(Processing::class);
+
+        return response()->noContent()->setStatusCode(SymfonyResponse::HTTP_ACCEPTED);
     }
 }

@@ -13,4 +13,6 @@ Route::group(['prefix' => 'sets', 'as' => 'sets.'], function (): void {
     Route::get('by-external-id/{external_id}', [SetController::class, 'showByExternalId'])->name('show-by-external-id');
 
     Route::delete('/{set}', [SetController::class, 'delete'])->name('delete');
+
+    Route::post('/{set}/start-tc', [SetController::class, 'startTc'])->name('start-tc');
 });

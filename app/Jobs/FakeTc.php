@@ -39,11 +39,11 @@ class FakeTc implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->faker = $this->makeFaker();
-
         if ($this->set->status::class !== Processing::class) {
             return;
         }
+
+        $this->faker = $this->makeFaker();
 
         $this->fakeThemes();
 

@@ -1,15 +1,16 @@
 <?php
 
-namespace Tests\Feature\App\Http\PublicApi\Controllers\ThemeController;
+namespace Tests\Feature\App\Http\PublicApi\Controllers\SetController;
 
-use App\Http\PublicApi\Controllers\ThemeController;
+use App\Http\PublicApi\Controllers\SetController;
+use App\Jobs\FakeTc;
 use App\Models\AccessToken\Ability;
 use App\Models\Set;
-use App\Models\Theme;
 use App\Models\User;
 use App\ModesStates\Set\Completed;
 use App\ModesStates\Set\Draft;
 use App\ModesStates\Set\Processing;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\URL;
 use Laravel\Sanctum\Sanctum;
 use PHPUnit\Framework\Attributes\CoversMethod;
@@ -18,8 +19,8 @@ use PHPUnit\Framework\Attributes\Test;
 use Tests\RefreshDatabase;
 use Tests\TestCase;
 
-#[CoversMethod(ThemeController::class, 'index')]
-class IndexTest extends TestCase
+#[CoversMethod(SetController::class, 'startTc')]
+class StartTcTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -31,47 +32,46 @@ class IndexTest extends TestCase
 
         $randomSet = Set::factory()->create();
 
-        $this->get(
-            URL::route('api.public.sets.themes.index', $randomSet->getRouteKey())
+        $this->post(
+            URL::route('api.public.sets.start-tc', $randomSet->getRouteKey())
         )->assertForbidden();
     }
 
     #[Test]
-    public function itReturnsSetThemesList(): void
+    public function itStartsFakeProcessing(): void
     {
+        Queue::fake();
+        config()->set('tc.fake', true);
+
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
 
-        $otherSet = Set::factory()->usingOwner($user)->create();
-        Theme::factory()->usingSet($otherSet)->count(10)->create();
-
         $set = Set::factory()->usingOwner($user)->create();
-        Theme::factory()->usingSet($set)->count($countInSet = 15)->create();
 
-        $response = $this->get(
-            URL::route('api.public.sets.themes.index', ['set' => $set->getRouteKey(), 'per_page' => $perPage = 5])
+        $response = $this->post(
+            URL::route('api.public.sets.start-tc', $set->getRouteKey())
         );
 
-        $response->assertOk();
-        $response->assertJsonPath('meta.total', $countInSet);
-        $response->assertJsonCount($perPage, 'data');
+        $response->assertAccepted();
+        $this->assertInstanceOf(Processing::class, $set->refresh()->status);
+        Queue::assertPushed(FakeTc::class);
     }
 
     #[Test]
     #[DataProvider('stateRuleData')]
-    public function itChecksStateRule(string $status, bool $allowed): void
+    public function itChecksStatus(string $status, bool $allowed): void
     {
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
 
         $set = Set::factory()->usingOwner($user)->create(['status' => $status]);
 
-        $response = $this->get(
-            URL::route('api.public.sets.themes.index', $set->getRouteKey())
+        $response = $this->post(
+            URL::route('api.public.sets.start-tc', $set->getRouteKey())
         );
 
         $allowed ?
-            $response->assertSuccessful() :
+            $response->assertAccepted() :
             $response->assertConflict();
     }
 
@@ -79,7 +79,7 @@ class IndexTest extends TestCase
     {
         return [
             ['status' => Draft::class, 'allowed' => true],
-            ['status' => Completed::class, 'allowed' => true],
+            ['status' => Completed::class, 'allowed' => false],
             ['status' => Processing::class, 'allowed' => false],
         ];
     }

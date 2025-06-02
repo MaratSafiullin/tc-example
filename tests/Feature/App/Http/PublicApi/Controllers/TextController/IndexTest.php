@@ -64,10 +64,10 @@ class IndexTest extends TestCase
         $user = User::factory()->create();
         Sanctum::actingAs($user, [Ability::PublicApi->value]);
 
-        $ownSet = Set::factory()->usingOwner($user)->create(['status' => $status]);
+        $set = Set::factory()->usingOwner($user)->create(['status' => $status]);
 
         $response = $this->get(
-            URL::route('api.public.sets.texts.index', $ownSet->getRouteKey())
+            URL::route('api.public.sets.texts.index', $set->getRouteKey())
         );
 
         $allowed ?

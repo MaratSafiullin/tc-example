@@ -31,7 +31,7 @@ class FakeTcTest extends TestCase
 
         Bus::dispatch(new FakeTc($set));
 
-        $this->assertEquals($status, $set->fresh()->status::class);
+        $this->assertInstanceOf($status, $set->fresh()->status);
         $this->assertDatabaseEmpty(Theme::class);
         $this->assertDatabaseEmpty(ThemeText::class);
     }
@@ -43,7 +43,7 @@ class FakeTcTest extends TestCase
 
         Bus::dispatch(new FakeTc($set));
 
-        $this->assertEquals(Completed::class, $set->fresh()->status::class);
+        $this->assertInstanceOf(Completed::class, $set->fresh()->status);
     }
 
     #[Test]
