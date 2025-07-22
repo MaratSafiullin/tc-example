@@ -5,7 +5,7 @@ namespace App\Http\PublicApi\Controllers;
 use App\Http\Core\Controllers\ChecksModelStateRules;
 use App\Http\Core\Controllers\Controller;
 use App\Http\PublicApi\Controllers\ResponseExamples\SetControllerExamples;
-use App\Http\PublicApi\Request\SetController\StoreRequest;
+use App\Http\PublicApi\Requests\SetController\StoreRequest;
 use App\Http\PublicApi\Resources\SetResource;
 use App\Models\Set;
 use App\ModesStates\Set\Processing;

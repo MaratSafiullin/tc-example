@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\PublicApi\Request\SetController;
+namespace App\Http\PublicApi\Requests\SetController;
 
-use App\Http\Core\Request\Keys;
-use App\Http\Core\Request\Request;
+use App\Http\Core\Requests\Keys;
+use App\Http\Core\Requests\Request;
 use App\Models\Set\ContextType;
 use Illuminate\Validation\Rule;
 

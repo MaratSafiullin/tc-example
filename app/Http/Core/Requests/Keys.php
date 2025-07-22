@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Core\Request;
+namespace App\Http\Core\Requests;
 
 class Keys
 {
@@ -14,4 +14,6 @@ class Keys
     public const SET          = 'set';
     public const TEXTS        = 'texts';
     public const TEXT         = 'text';
+    public const ID           = 'id';
+    public const SENTIMENT    = 'sentiment';
 }

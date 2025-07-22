@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\PublicApi\Request\ThemeController;
+namespace App\Http\PublicApi\Requests\ThemeController;
 
-use App\Http\Core\Request\Keys;
-use App\Http\Core\Request\Request;
+use App\Http\Core\Requests\Keys;
+use App\Http\Core\Requests\Request;
 use App\Rules\SetThemesUnique;
 
 class StoreRequest extends Request

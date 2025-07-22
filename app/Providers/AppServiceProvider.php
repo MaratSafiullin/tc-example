@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Http\Core\Request\Keys;
+use App\Http\Core\Requests\Keys;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 

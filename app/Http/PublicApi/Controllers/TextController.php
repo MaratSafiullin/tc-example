@@ -4,9 +4,9 @@ namespace App\Http\PublicApi\Controllers;
 
 use App\Http\Core\Controllers\ChecksModelStateRules;
 use App\Http\Core\Controllers\Controller;
-use App\Http\Core\Request\Keys;
+use App\Http\Core\Requests\Keys;
 use App\Http\PublicApi\Controllers\ResponseExamples\TextControllerExamples;
-use App\Http\PublicApi\Request\TextController\StoreRequest;
+use App\Http\PublicApi\Requests\TextController\StoreRequest;
 use App\Http\PublicApi\Resources\TextResource;
 use App\Models\Set;
 use App\Models\Text;

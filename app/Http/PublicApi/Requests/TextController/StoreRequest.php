@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\PublicApi\Request\TextController;
+namespace App\Http\PublicApi\Requests\TextController;
 
-use App\Http\Core\Request\Keys;
-use App\Http\Core\Request\Request;
+use App\Http\Core\Requests\Keys;
+use App\Http\Core\Requests\Request;
 
 class StoreRequest extends Request
 {
