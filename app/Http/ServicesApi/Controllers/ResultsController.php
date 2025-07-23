@@ -23,46 +23,50 @@ class ResultsController extends Controller
     {
         $data = $request->validated();
 
-        // Get unique theme names from the request
-        $themeNames = collect($data[Keys::TEXTS])
+        $this->createMissingThemes($data, $set);
+        $this->saveResults($set, $data);
+
+        return response()->noContent(SymfonyResponse::HTTP_CREATED);
+    }
+
+    private function createMissingThemes(array $tcData, Set $set): void
+    {
+        $uniqueNewThemeNames = collect($tcData[Keys::TEXTS])
             ->pluck(Keys::THEMES)
             ->flatten(1)
             ->pluck(Keys::NAME)
             ->unique()
             ->values();
 
-        // Get existing themes for this set
         $existingThemes = $set->themes()
-            ->whereIn('name', $themeNames)
+            ->whereIn('name', $uniqueNewThemeNames)
             ->get()
             ->keyBy('name');
 
-        // Create new themes that don't exist
-        $newThemes = $themeNames
+        $newThemesData = $uniqueNewThemeNames
             ->diff($existingThemes->keys())
             ->map(fn(string $name) => [
                 'name'   => $name,
                 'set_id' => $set->id,
             ]);
 
-        if ($newThemes->isNotEmpty()) {
-            Theme::insert($newThemes->toArray());
+        if ($newThemesData->isNotEmpty()) {
+            Theme::insert($newThemesData->toArray());
         }
+    }
 
-        // Get all themes (existing + newly created)
-        $allThemes = $set->themes()
-            ->whereIn('name', $themeNames)
-            ->get()
-            ->keyBy('name');
+    private function saveResults(Set $set, array $tcData): void
+    {
+        /** @var \LaravelIdea\Helper\App\Models\_IH_Theme_C $allThemes */
+        $allThemes = $set->themes->keyBy('name');
 
-        // Prepare and insert theme_text records
-        $themeTextRecords = collect($data[Keys::TEXTS])
-            ->flatMap(function ($textData) use ($allThemes) {
+        $themeTextRecords = collect($tcData[Keys::TEXTS])
+            ->flatMap(function (array $textData) use ($allThemes) {
                 $textId = $textData[Keys::ID];
 
                 return collect($textData[Keys::THEMES])
                     ->unique(Keys::NAME)
-                    ->map(function ($themeData) use ($textId, $allThemes) {
+                    ->map(function (array $themeData) use ($textId, $allThemes) {
                         $theme = $allThemes->get($themeData[Keys::NAME]);
 
                         return [
@@ -72,13 +76,8 @@ class ResultsController extends Controller
                         ];
                     });
             })
-            ->unique(function ($item) {
-                return $item['text_id'] . '-' . $item['theme_id'];
-            })
             ->values();
 
-        ThemeText::insert($themeTextRecords->toArray());
-
-        return response()->noContent(SymfonyResponse::HTTP_CREATED);
+        ThemeText::upsert($themeTextRecords->toArray(), ['text_id', 'theme_id'], ['sentiment']);
     }
 }

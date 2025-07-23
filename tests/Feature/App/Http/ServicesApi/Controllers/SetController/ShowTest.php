@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature\App\Http\PublicApi\Controllers\SetController;
+namespace Tests\Feature\App\Http\ServicesApi\Controllers\SetController;
 
-use App\Http\PublicApi\Controllers\SetController;
+use App\Http\ServicesApi\Controllers\SetController;
 use App\Models\AccessToken\Ability;
 use App\Models\Set;
 use App\Models\User;
@@ -19,28 +19,15 @@ class ShowTest extends TestCase
     use RefreshDatabase;
 
     #[Test]
-    public function itChecksAccess(): void
-    {
-        $user = User::factory()->create();
-        Sanctum::actingAs($user, [Ability::PublicApi->value]);
-
-        $randomSet = Set::factory()->create();
-
-        $this->get(
-            URL::route('api.public.sets.show', $randomSet->getRouteKey())
-        )->assertForbidden();
-    }
-
-    #[Test]
     public function itReturnsSet(): void
     {
         $user = User::factory()->create();
-        Sanctum::actingAs($user, [Ability::PublicApi->value]);
+        Sanctum::actingAs($user, [Ability::ServicesApi->value]);
 
-        $set = Set::factory()->usingOwner($user)->create();
+        $set = Set::factory()->create();
 
         $response = $this->get(
-            URL::route('api.public.sets.show', $set->getRouteKey())
+            URL::route('api.services.sets.show', $set->getRouteKey())
         );
 
         $response->assertOk();
